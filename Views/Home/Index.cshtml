@@ -5,4 +5,17 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            Get Mars Rover Photos
+        </button>
+    </h2>
+    <form id="MarsRoverPhotos" asp-controller="Home" asp-action="GetMarsRoverPhotosByDate" method="post">
+        <label for="Date" class="col-sm-12">Date</label>
+        
+        @Html.TextBox("datevalue", "", new { @class = "col-sm-12 form-control input-lg" })
+
+        <button class="text-black-50 button" role="button" type="submit" id="GetPhotosButton">Get Photos</button>
+    </form>
 </div>

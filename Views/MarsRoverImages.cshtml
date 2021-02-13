@@ -1,0 +1,30 @@
+﻿@model MarsRoverPhotos
+
+@{
+    ViewData["Title"] = "MarsRoverImages";
+}
+
+<h1>MarsRoverImages</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => Model.message)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.photos) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.earth_date)
+                @Html.DisplayFor(modelItem => item.img_src)
+                @Html.DisplayFor(modelItem => item.camera.name)
+                @Html.DisplayFor(modelItem => item.rover.name)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
