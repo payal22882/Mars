@@ -1,7 +1,7 @@
 # Mars
 Mars Rover Image Viewer Solution
 
-## Acceptance Criteria
+## Details
 Solution uses Mars Rover Photos API described [here](https://api.nasa.gov) with a given day as input, returning corresponding photo images as output. The application downloads and store each image locally in your C: drive path.
 
 - You may use the list of date formats below to pull the images that were captured on that date:
