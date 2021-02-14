@@ -6,25 +6,70 @@
 
 <h1>MarsRoverImages</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => Model.message)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.photos) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.earth_date)
-                @Html.DisplayFor(modelItem => item.img_src)
-                @Html.DisplayFor(modelItem => item.camera.name)
-                @Html.DisplayFor(modelItem => item.rover.name)
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div>
+    <div>
+        <div>
+            @if (Model.message != "Success")
+            {
+                <div class="alert alert-danger" role="alert">
+
+                    @Html.Raw(Model.message)
+             
+                </div>
+            }
+                @*<input value="Download Files" class="text-black-50 btn btn-secondary mr-4" type="button" id="btnDownloadFiles" />*@
+        </div>
+    </div>
+    <div>
+        <div class="row center-Align">
+            <div class="col-sm-2">Earth Date</div>
+            <div class="col-sm-4">Image</div>
+            <div class="col-sm-3">Camera</div>
+            <div class="col-sm-3">Rover</div>
+        </div>
+        <div>
+            @if (Model.message == "Success")
+            {
+                @foreach (var item in Model.photos)
+                {
+                    <div class="row greyBackground mb-1">
+                        <div class="col-sm-2">
+                            @Html.DisplayFor(modelItem => item.earth_date)
+                        </div>
+                        <div class="col-sm-4" style="display:block;padding:10px;">
+                            <img src=@Html.DisplayFor(modelItem => item.img_src) alt="Photo" width="300px" height="225px" />
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.DisplayFor(modelItem => item.camera.name)
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.DisplayFor(modelItem => item.rover.name)
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+@*<div id="LoadingSpinner" style="display:none" role="status">
+    <img id="loading-image" src="~/img/loading.gif" alt="Loading..." />
+</div>*@
+
+
+@*<script type="text/javascript">
+    $("#btnDownloadFiles").click(function () {
+        //$("#LoadingSpinner").show();
+        var obj = @Html.Raw(Model);
+        $.ajax({
+            url: '/Home/DownloadFiles',
+            data: JSON.stringify(JSON.Encode(obj)),
+            type: 'POST',
+            success: function (data) {
+                //$("#LoadingSpinner").hide();
+            },
+            error: function (error) {
+                //$("#LoadingSpinner").hide();
+            }
+        });
+    });
+</script>*@

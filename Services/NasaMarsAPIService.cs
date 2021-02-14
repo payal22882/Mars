@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Mars_Rover.Models;
 using Newtonsoft.Json;
 using System.Net;
+using System.Globalization;
 
 namespace Mars_Rover.Services
 {
@@ -34,12 +35,15 @@ namespace Mars_Rover.Services
             {
                 MarsRoverPhotos objMarsRoverPhotos = new MarsRoverPhotos();
                 DateTime currentdate = new DateTime();
+                string result;
+                CultureInfo provider = CultureInfo.InvariantCulture;
+
                 if (DateTime.TryParse(datevalue, out currentdate))
                 {
-
+                    result = Convert.ToDateTime(datevalue).ToString("yyyy-MM-dd");
                     string baseURL = _configuration.GetValue<string>("ConfigurationSettings:MarsRoverPhotosAPI");
                     string apiKey = "IVSY73JJjs28z7GYrbYdBCm7O5ewzc5KlqsJD87a";
-                    string finalURL = baseURL + "earth_date=" + datevalue + "&api_key=" + apiKey;
+                    string finalURL = baseURL + "earth_date=" + result + "&api_key=" + apiKey;
 
                     //Configure httpclient for call
 

@@ -4,18 +4,34 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Please type in date of your choice in any date format to view Mars Rover images for the given date</p>
 
     <h2 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        <label class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
             Get Mars Rover Photos
-        </button>
+        </label>
     </h2>
     <form id="MarsRoverPhotos" asp-controller="Home" asp-action="GetMarsRoverPhotosByDate" method="post">
-        <label for="Date" class="col-sm-12">Date</label>
-        
-        @Html.TextBox("datevalue", "", new { @class = "col-sm-12 form-control input-lg" })
 
-        <button class="text-black-50 button" role="button" type="submit" id="GetPhotosButton">Get Photos</button>
+        <div>
+            <div class="row">
+                <label for="Date" class="col-sm-2">Earth Date</label>
+                @Html.TextBox("datevalue", "", new { @class = "col-sm-7 form-control input-lg" })
+                <button class="text-black-50 button col-sm-3" role="button" type="submit" id="GetPhotosButton">Get Photos</button>
+            </div>
+        </div>
+
+
     </form>
+
+    <div id="LoadingSpinner" style="display:none" role="status">
+        <img id="loading-image" src="~/img/loading.gif" alt="Loading..." />
+    </div>
+    <script language="JavaScript" type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        $("#GetPhotosButton").click(function () {
+            $("#LoadingSpinner").show();
+        });
+    </script>
+
 </div>

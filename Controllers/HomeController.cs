@@ -57,13 +57,18 @@ namespace Mars_Rover.Controllers
                     result = Convert.ToDateTime(datevalue).ToString("yyyy-MM-dd");
                     objMarsRoverPhotos = await _nasaMarsapiService.GetMarsRoverPhotosByDateAsync(result.ToString());
 
+                    if (!(Directory.Exists(_configuration.GetValue<string>("ConfigurationSettings:Path"))))
+                    {
+                        Directory.CreateDirectory(_configuration.GetValue<string>("ConfigurationSettings:Path"));
+                    }
+
                     foreach (Photo photo in objMarsRoverPhotos.photos)
                     {
-                        //using (WebClient client = new WebClient())
-                        //{
-                        //    string fileName = Path.GetFileName(photo.img_src);
-                        //    client.DownloadFileAsync(new Uri(photo.img_src), _configuration.GetValue<string>("ConfigurationSettings:Path") + datevalue + "-" + fileName);
-                        //}
+                        using (WebClient client = new WebClient())
+                        {
+                            string fileName = Path.GetFileName(photo.img_src);
+                            client.DownloadFileTaskAsync(new Uri(photo.img_src), _configuration.GetValue<string>("ConfigurationSettings:Path") + datevalue + "-" + fileName).Wait();
+                        }
                     }
                 }
                 else
@@ -77,8 +82,30 @@ namespace Mars_Rover.Controllers
             {
                 MarsRoverPhotos objMarsRoverPhotos = new MarsRoverPhotos();
                 objMarsRoverPhotos.message = "Error occured while processing your request. Please contact your administrator.";
+                _logger.LogCritical("Error occured while performing call to GetMarsRoverPhotosByDate. Date: " + datevalue.ToString() + " Exception: " + ex.ToString() + " Exception Trace: " + ex.StackTrace);
                 return View("~/Views/MarsRoverImages.cshtml", objMarsRoverPhotos);
             }
         }
+
+        //public bool DownloadFiles(MarsRoverPhotos objMarsRoverPhotos)
+        //{
+        //    try
+        //    {
+        //        foreach (Photo photo in objMarsRoverPhotos.photos)
+        //        {
+        //            using (WebClient client = new WebClient())
+        //            {
+        //                string fileName = Path.GetFileName(photo.img_src);
+        //                client.DownloadFileTaskAsync(new Uri(photo.img_src), _configuration.GetValue<string>("ConfigurationSettings:Path") + photo.earth_date + "-" + fileName).Wait();
+        //            }
+        //        }
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogCritical("Error occured while performing call to DownloadFiles. Exception: " + ex.ToString() + " Exception Trace: " + ex.StackTrace);
+        //        return false;
+        //    }
+        //}
     }
 }
